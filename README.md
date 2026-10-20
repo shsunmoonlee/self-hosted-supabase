@@ -4,7 +4,7 @@
 
 [Quick wins](#quick-wins-in-10-minutes) · [Backups](docs/02-backups-and-restore.md) · [PITR](docs/03-point-in-time-recovery.md) · [Upgrades](docs/04-upgrades.md) · [Hardening](docs/01-production-checklist.md) · [Disk and WAL](docs/06-disk-and-wal-growth.md) · [Monitoring](docs/07-monitoring-and-health-checks.md) · [Coolify](docs/08-coolify.md) · [Gotchas](docs/gotchas.md) · [FAQ](docs/faq.md) · [All contents](#contents)
 
-Maintained by Seunghun Lee ([LinkedIn](https://www.linkedin.com/in/shsunmoon/) · [X](https://x.com/shsunmoon)). Need a production self-hosted setup done for you? See [Work with me](#work-with-me).
+Maintained by Seunghun Lee, who runs [transcribe.so](https://transcribe.so) (speech to text) on self-hosted Supabase in production ([LinkedIn](https://www.linkedin.com/in/shsunmoon/) · [X](https://x.com/shsunmoon)). Need a production self-hosted setup done for you? See [Work with me](#work-with-me).
 
 | Tested component | Version | Date |
 |---|---|---|

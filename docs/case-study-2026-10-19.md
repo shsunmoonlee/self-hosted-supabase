@@ -2,7 +2,7 @@
 
 > **Basis.** Our own production window and its same-day rehearsal. Numbers are rounded.
 
-We run a production app on self-hosted Supabase, deployed as a Coolify service on one server. By October 2026 the stack had drifted far from upstream: Kong 2.8, Postgres 15, Realtime from the 2.34 line, and six services we did not use. We brought it to current upstream versions in one sitting.
+We run [transcribe.so](https://transcribe.so), a speech-to-text app, on self-hosted Supabase, deployed as a Coolify service on one server. By October 2026 the stack had drifted far from upstream: Kong 2.8, Postgres 15, Realtime from the 2.34 line, and six services we did not use. We brought it to current upstream versions in one sitting.
 
 ## Before
 
