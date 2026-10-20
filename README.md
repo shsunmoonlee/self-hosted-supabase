@@ -2,7 +2,9 @@
 
 **The day-2 handbook for self-hosted Supabase: backups and restore drills, point-in-time recovery, safe upgrades of long-running stacks, hardening, trimming, disk and WAL growth, monitoring, and Coolify. The parts the official docs leave to you.**
 
-Maintained by Seunghun Lee. I offer production self-hosted SaaS setup as a service: [LinkedIn](https://www.linkedin.com/in/shsunmoon/) · [X](https://x.com/shsunmoon).
+[Quick wins](#quick-wins-in-10-minutes) · [Backups](docs/02-backups-and-restore.md) · [PITR](docs/03-point-in-time-recovery.md) · [Upgrades](docs/04-upgrades.md) · [Hardening](docs/01-production-checklist.md) · [Disk and WAL](docs/06-disk-and-wal-growth.md) · [Monitoring](docs/07-monitoring-and-health-checks.md) · [Coolify](docs/08-coolify.md) · [Gotchas](docs/gotchas.md) · [FAQ](docs/faq.md) · [All contents](#contents)
+
+Maintained by Seunghun Lee ([LinkedIn](https://www.linkedin.com/in/shsunmoon/) · [X](https://x.com/shsunmoon)). Need a production self-hosted setup done for you? See [Work with me](#work-with-me).
 
 | Tested component | Version | Date |
 |---|---|---|
@@ -17,6 +19,8 @@ Maintained by Seunghun Lee. I offer production self-hosted SaaS setup as a servi
 | Platform | Docker Compose managed by Coolify 4.4.6 | 2026-10-19 |
 
 Tested on a production stack and its rehearsal clone; digests in [versions.md](versions.md). Every chapter says what we verified and what comes from upstream.
+
+If this saves you an incident, a star helps other self-hosters find it.
 
 ## Start here
 
