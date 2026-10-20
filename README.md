@@ -133,6 +133,8 @@ Read each script before running it. None uploads anything.
 
 Requirements: bash 4+, Docker with Compose v2.17+ (`--dry-run`), `psql` 14+ for the optional row counts.
 
+Also available as standalone gists (snapshots; this repo is the maintained version): [Postgres 15 to 17 on Coolify with rollback](https://gist.github.com/shsunmoonlee/05aa8c51df7b831cc9cccfe0e684978d) · [Recreate one container without losing the coolify network](https://gist.github.com/shsunmoonlee/5e3c04b88a5fffc2ad34c4ae29084322) · [Things that broke](https://gist.github.com/shsunmoonlee/f05211715b31aba5ca37ad9aee336f5a) · [Preflight, verify and hardening SQL](https://gist.github.com/shsunmoonlee/56b62d54347f6f550f99b88ce229779f).
+
 ## What this is not
 
 - Not an official Supabase or Coolify project, and not an installer. For installing, use the [official Docker guide](https://supabase.com/docs/guides/self-hosting/docker); for Kubernetes, [supabase-kubernetes](https://github.com/supabase-community/supabase-kubernetes); for observability tooling, [supabase-observability](https://github.com/supabase-community/supabase-observability).
