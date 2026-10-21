@@ -2,7 +2,7 @@
 
 **The day-2 handbook for self-hosted Supabase: backups and restore drills, point-in-time recovery, safe upgrades of long-running stacks, hardening, trimming, disk and WAL growth, monitoring, and Coolify. The parts the official docs leave to you.**
 
-[Quick wins](#quick-wins-in-10-minutes) · [Backups](docs/02-backups-and-restore.md) · [PITR](docs/03-point-in-time-recovery.md) · [Upgrades](docs/04-upgrades.md) · [Hardening](docs/01-production-checklist.md) · [Disk and WAL](docs/06-disk-and-wal-growth.md) · [Monitoring](docs/07-monitoring-and-health-checks.md) · [Coolify](docs/08-coolify.md) · [Gotchas](docs/gotchas.md) · [FAQ](docs/faq.md) · [All contents](#contents)
+[Quick wins](#quick-wins-in-10-minutes) · [Backups](docs/02-backups-and-restore.md) · [PITR](docs/03-point-in-time-recovery.md) · [Upgrades](docs/04-upgrades.md) · [Hardening](docs/01-production-checklist.md) · [Disk and WAL](docs/06-disk-and-wal-growth.md) · [Monitoring](docs/07-monitoring-and-health-checks.md) · [Coolify](docs/08-coolify.md) · [Studio](docs/09-studio-private-by-default.md) · [Gotchas](docs/gotchas.md) · [FAQ](docs/faq.md) · [All contents](#contents)
 
 Maintained by Seunghun Lee, who runs [transcribe.so](https://transcribe.so) (speech to text) on self-hosted Supabase in production ([LinkedIn](https://www.linkedin.com/in/shsunmoon/) · [X](https://x.com/shsunmoon)). Need a production self-hosted setup done for you? See [Work with me](#work-with-me).
 
@@ -116,6 +116,7 @@ Dotted lines are services many production apps can remove. We removed Storage, i
 6. [Disk and WAL growth](docs/06-disk-and-wal-growth.md): replication slots, `_supabase`, images and volumes
 7. [Monitoring and health checks](docs/07-monitoring-and-health-checks.md): per-service checks, internal vs public probes, alerts
 8. [Supabase on Coolify](docs/08-coolify.md): every Coolify-specific behaviour we hit
+9. [Studio: private by default](docs/09-studio-private-by-default.md): what basic auth does and does not protect, three ways to keep Studio off the internet, a verify checklist
 - [Gotchas](docs/gotchas.md): 32 things that broke, or nearly did, one paragraph each
 - [Case study: one maintenance window](docs/case-study-2026-10-19.md)
 - [FAQ](docs/faq.md)

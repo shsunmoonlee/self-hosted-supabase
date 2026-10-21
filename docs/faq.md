@@ -29,8 +29,8 @@ Usually a replication slot whose consumer is gone or behind, often the analytics
 **Can I remove services I do not use?**
 Yes, with evidence that nothing uses them and attention to what depends on them. See [Trimming the stack](05-trimming-the-stack.md).
 
-**How do I keep Studio safe?**
-Keep it off the public internet, or put real authentication in front of it. Basic auth alone is the stock setup. See [Production checklist](01-production-checklist.md) item 1, and [Vadko's Studio guide](https://gist.github.com/Vadko/bb21b01757a3ca2c82f04343babcf333) for SSO options on Envoy.
+**How do I keep Studio private?**
+Keep it off the public internet, or put real authentication in front of it. Basic auth alone is the stock setup. See [Studio: private by default](09-studio-private-by-default.md) for three patterns with a verify step each, [Production checklist](01-production-checklist.md) item 1, and [Vadko's Studio guide](https://gist.github.com/Vadko/bb21b01757a3ca2c82f04343babcf333) for SSO options on Envoy.
 
 **Can I run multiple projects on one self-hosted instance?**
 Not in the way Cloud does; one stack is one project. See the long-running request in [supabase discussion 4907](https://github.com/orgs/supabase/discussions/4907).

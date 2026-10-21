@@ -2,6 +2,10 @@
 
 One entry per upgrade window. Newest first. Each entry: what changed, what it took, what broke, and links to the gotchas and version rows it added.
 
+## 2026-10-21: Studio chapter
+
+New chapter [Studio: private by default](docs/09-studio-private-by-default.md): why Studio must stay off the internet, what the stock `DASHBOARD_USERNAME` / `DASHBOARD_PASSWORD` basic auth covers on Kong and Envoy, three patterns (no public route plus a tunnel, a reverse-proxy allowlist, SSO forward-auth) with Caddy and Traefik snippets, Coolify notes, and a from-outside verify checklist. Snippets are from upstream docs and the linked references, untested by us. README contents and FAQ updated.
+
 ## 2026-10-20: handbook structure
 
 The notes from the 2026-10-19 window became a general handbook: production checklist and hardening, backups and restore, point-in-time recovery (design), upgrades (the window's runbook now lives under `docs/upgrades/`), trimming, disk and WAL growth, monitoring, Coolify, FAQ and a condensed case study. New read-only script: `scripts/hardening-check.sql`. Gotcha numbers are unchanged.

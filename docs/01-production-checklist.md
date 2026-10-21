@@ -7,12 +7,12 @@ The official [self-hosting overview](https://supabase.com/docs/guides/self-hosti
 ## Network exposure
 
 **1. Studio and admin ports are not reachable from the internet.** [verified]
-Studio, Postgres (`5432`), the pooler (`6543`), the gateway's own port (`8000`), Realtime (`4000`) and postgres-meta should be reachable only from where you need them. Put the public API behind your reverse proxy and keep everything else private. The stock compose protects Studio with basic auth only ([docker guide](https://supabase.com/docs/guides/self-hosting/docker)); there is a long issue history of people finding their Studio open ([supabase#4934](https://github.com/supabase/supabase/issues/4934)).
+Studio, Postgres (`5432`), the pooler (`6543`), the gateway's own port (`8000`), Realtime (`4000`) and postgres-meta should be reachable only from where you need them. Put the public API behind your reverse proxy and keep everything else private. The stock compose protects Studio with basic auth only ([docker guide](https://supabase.com/docs/guides/self-hosting/docker)); there is a long issue history of people finding their Studio open ([supabase#4934](https://github.com/supabase/supabase/issues/4934)). Three ways to keep it private: [Studio: private by default](09-studio-private-by-default.md).
 
 Check, from a machine outside your network:
 ```bash
 for port in 5432 6543 8000 4000 3000; do nc -z -w 3 <public-ip> $port && echo "OPEN $port" || echo "closed $port"; done
-curl -s -o /dev/null -w '%{http_code}\n' https://<api-host>/            # not Studio: expect 401, 404 or your own page
+curl -s -o /dev/null -w '%{http_code}\n' https://<api-host>/            # not Studio: expect 404 or your own page; 401 means Studio is still there behind one shared password, see chapter 9
 ```
 
 **2. The gateway blocks the admin APIs.** [verified]
