@@ -18,7 +18,7 @@ Maintained by Seunghun Lee, who runs [transcribe.so](https://transcribe.so) (spe
 | Vector | `0.45.0-alpine` | 2026-10-19 |
 | Platform | Docker Compose managed by Coolify 4.4.6 | 2026-10-19 |
 
-Tested on a production stack and its rehearsal clone; digests in [versions.md](versions.md). Every chapter says what we verified and what comes from upstream.
+Tested on a production stack and its rehearsal clones; digests in [versions.md](versions.md). Every chapter says what we verified and what comes from upstream.
 
 If this saves you an incident, a star helps other self-hosters find it.
 
@@ -117,7 +117,7 @@ Dotted lines are services many production apps can remove. We removed Storage, i
 7. [Monitoring and health checks](docs/07-monitoring-and-health-checks.md): per-service checks, internal vs public probes, alerts
 8. [Supabase on Coolify](docs/08-coolify.md): every Coolify-specific behaviour we hit
 9. [Studio: private by default](docs/09-studio-private-by-default.md): what basic auth does and does not protect, three ways to keep Studio off the internet, a verify checklist
-- [Gotchas](docs/gotchas.md): 32 things that broke, or nearly did, one paragraph each
+- [Gotchas](docs/gotchas.md): 38 things that broke, or nearly did, one paragraph each
 - [Case study: one maintenance window](docs/case-study-2026-10-19.md)
 - [FAQ](docs/faq.md)
 - [Tips for the next upgrade](docs/tips.md)

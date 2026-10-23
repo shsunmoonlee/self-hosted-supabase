@@ -1,8 +1,8 @@
 # Upgrades 2: Rehearse on a clone
 
-> **Basis.** Verified by us on 2026-10-19: rehearsed on a clone with production data, then run on a production stack (Coolify 4.4.6, Docker Compose).
+> **Basis.** Verified by us on 2026-10-19: rehearsed on a clone with production data, then run on a production stack (Coolify 4.4.6, Docker Compose). The section "A second rehearsal" comes from a second clone on 2026-10-23, for a smaller change that had not yet run on production when this was written.
 
-We rehearsed every step on a clone of the stack the same morning, and it found two bugs that would have hurt production: the pg_upgrade event-trigger failure (gotcha 21) and a recreate-tool rollback that left the gateway unable to read its config (gotcha 30). It also missed things, which is the second half of this chapter.
+We rehearsed every step on a clone of the stack the same morning, and it found two bugs that would have hurt production: the pg_upgrade event-trigger failure (gotcha 21) and a recreate-tool rollback that left the gateway unable to read its config (gotcha 30). It also missed things; see "What a clone does not tell you" below.
 
 ## Building the clone
 
@@ -29,6 +29,25 @@ Record the time of every step. On our clone: about 40 seconds per gateway swap t
 - **Background jobs.** The clone had no pg_cron jobs, so it never exercised disabling and re-enabling real jobs. Our local end-to-end test covers that; check the job count before and after on production anyway.
 - **Live sessions and traffic.** The clone had no real clients, so it could not show stale connections, open transactions that delay a shutdown, or a client that depends on a route you are about to remove.
 - **Timings.** Use clone timings to size the window, then add margin. Production had more data, more connections and other workloads on the same host.
+
+## A second rehearsal: a config change and one restart (2026-10-23)
+
+The next planned change on production is smaller but touches the live database: a new replication role, new `pg_hba` lines, one file in `conf.d`, and one `docker restart` under running apps. We cloned again for it, and the clone paid for itself again.
+
+**Building it, with the lessons from this one:**
+
+- **Image references from the running containers**, not from Coolify's stored compose, which still named the old Postgres major (gotcha 2).
+- **No domain, no shared network.** Remove both the list form and the map form of `SERVICE_URL_*` and `SERVICE_FQDN_*`, replace any `${SERVICE_URL_*}` references with internal URLs, and read every app's `fqdn` back before the first start (gotcha 33). Keep the clone off Coolify's shared `coolify` network (gotcha 34). Drop autoheal: it watches the whole host's Docker socket.
+- **Nothing calls out.** Leave pg_cron's `cron.job` and `cron.job_run_details` data out of the restore, so the clone never runs production's scheduled jobs, and pg_net's queue data, so it never sends queued HTTP calls. Leave out Realtime's tenant row too; Realtime seeds a fresh one with the clone's own secrets. Do not copy production's SMTP or log-sink credentials into the clone's environment. Before writing any test data, check for triggers that call pg_net (database webhooks fire on writes and would call the restored production URLs), or give the clone no outbound route. This time we did not mount the `pgsodium` root key: the rehearsal did not need Vault, and without the key nothing stored there can be decrypted on the clone.
+- **Grants and queues.** The nightly dump had no grants, so we applied a catalog-level copy of production's grants after the restore, and recreated the pgmq queues (their tables are extension members and are not in the dump; a backup gap worth knowing about on its own).
+- **Match the config layout before you rehearse a config change.** The fresh volume's `conf.d` was a symlink where production has a real directory (gotcha 35). Rehearsing on the symlink would have "passed" a change that does not survive a recreate.
+- **A stand-in for remote clients.** The new `pg_hba` line admits replication only from the private range the receivers come from. We created a small Docker network inside that range and attached the clone's database to it, so the rule was tested exactly as written. Pick a slice nothing on the clone's host uses: a bridge network hides that slice of addresses from the host itself.
+
+**What we ran:** each step in order; the undo of the steps before the restart, then the steps again; the restart under light load (only our probes: one write every 0.2 s, PostgREST and Auth every 0.5 s, one Realtime broadcast per second) with probes on the database (connect and write), PostgREST and Realtime through the gateway; a real receiver connection from the allowed range; four connections that must be refused (the role on an ordinary database, replication from another network, replication as another user, a wrong password); and the "database does not boot" recovery: we wrote a `conf.d` file that makes Postgres refuse to start, restarted, then removed the file from the config volume with a one-off container (`docker run --rm -v <config volume>:/vol --entrypoint rm <db image> /vol/conf.d/<file>`) and ran `docker start`.
+
+**What it found:** the `conf.d` trap (gotcha 35); an undo that left the role able to log in, so redoing the first step tripped the role script's own guard (it refuses to reuse a role that can already log in); a runbook check for Realtime that would have raised a false alarm (gotcha 36); and three bugs in our own probes (gotchas 36 and 38). Measured: database back in about 6 seconds, PostgREST about 8, Realtime about 20; the "does not boot" recovery took about 30 seconds after the `rm` because of Docker's restart backoff, so wait rather than repeat the command. A busy database shuts down more slowly than this lightly loaded clone; we budget up to a minute.
+
+**Tear it down the same day.** The clone holds a copy of production data. Delete the service with its volumes, the networks you created, the dump copy and any credentials you wrote on the server, the images you pulled only for it, and the project.
 
 ## Tests that are worth keeping
 

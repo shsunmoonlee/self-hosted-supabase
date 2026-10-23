@@ -2,6 +2,10 @@
 
 One entry per upgrade window. Newest first. Each entry: what changed, what it took, what broke, and links to the gotchas and version rows it added.
 
+## 2026-10-23: second clone rehearsal (config change and a restart)
+
+[Rehearse on a clone](docs/upgrades/02-rehearse-on-a-clone.md) gained a section on rehearsing a smaller planned change that touches the live database (replication role, `pg_hba`, `conf.d`, one restart under light load): how we built the clone this time, what we ran, what it found, and the measured outage (database about 6 s, PostgREST about 8 s, Realtime about 20 s). Six new gotchas, 33 to 38: the map-form `SERVICE_URL_*` variable that gives a clone a domain, a clone sharing the `supabase-db` alias on Coolify's network, the `conf.d` symlink on a fresh config volume, and Realtime's recovery after a restart (all from the clone); a lock test that must check why a write failed (from our backup tooling's own tests); and probe timestamps and permissions. Gotcha 2 now says what a stale stored compose does after a major upgrade, and gotcha 28 why the first clone had no cron jobs.
+
 ## 2026-10-21: Studio chapter
 
 New chapter [Studio: private by default](docs/09-studio-private-by-default.md): why Studio must stay off the internet, what the stock `DASHBOARD_USERNAME` / `DASHBOARD_PASSWORD` basic auth covers on Kong and Envoy, three patterns (no public route plus a tunnel, a reverse-proxy allowlist, SSO forward-auth) with Caddy and Traefik snippets, Coolify notes, and a from-outside verify checklist. Snippets are from upstream docs and the linked references, untested by us. README contents and FAQ updated.
