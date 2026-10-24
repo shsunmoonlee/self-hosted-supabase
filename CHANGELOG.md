@@ -2,6 +2,10 @@
 
 One entry per upgrade window. Newest first. Each entry: what changed, what it took, what broke, and links to the gotchas and version rows it added.
 
+## 2026-10-24: a stored-versus-host comparison
+
+A full read-only comparison of Coolify's stored compose, the host file and the running containers. Every literal in the host file was present in its container, images and networks included; the trap was in what the literals did not do. New gotcha 39: a literal in a service's `environment:` block does not feed `${VAR}` interpolation, so for interpolated values the stack `.env`, rendered from Coolify's environment rows, decides, and gotcha 2 now points to it. We nearly turned on phone signup with auto-confirm by "fixing" the rows to match the host file.
+
 ## 2026-10-23: second clone rehearsal (config change and a restart)
 
 [Rehearse on a clone](docs/upgrades/02-rehearse-on-a-clone.md) gained a section on rehearsing a smaller planned change that touches the live database (replication role, `pg_hba`, `conf.d`, one restart under light load): how we built the clone this time, what we ran, what it found, and the measured outage (database about 6 s, PostgREST about 8 s, Realtime about 20 s). Six new gotchas, 33 to 38: the map-form `SERVICE_URL_*` variable that gives a clone a domain, a clone sharing the `supabase-db` alias on Coolify's network, the `conf.d` symlink on a fresh config volume, and Realtime's recovery after a restart (all from the clone); a lock test that must check why a write failed (from our backup tooling's own tests); and probe timestamps and permissions. Gotcha 2 now says what a stale stored compose does after a major upgrade, and gotcha 28 why the first clone had no cron jobs.
